@@ -68,7 +68,7 @@ void CRbCASUtils::__init_model()
 #else
 #ifdef WITH_RKNN
     /* 初始化网络 */
-    m_PCYOLOV5DetNet = new CYOLOV5_NPU_Detector;
+    m_PCYOLOV5DetNet = new CYOLOV5_NPU_Detector_CAS;
 #endif
 #endif
 }

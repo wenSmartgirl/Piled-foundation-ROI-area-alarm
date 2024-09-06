@@ -442,7 +442,7 @@ void CYOLOV5_NCNN_Detector::draw_objects()
  * @brief Construct a new cyolov5 npu detector::cyolov5 npu detector object
  *
  */
-CYOLOV5_NPU_Detector::CYOLOV5_NPU_Detector()
+CYOLOV5_NPU_Detector_CAS::CYOLOV5_NPU_Detector_CAS()
 {
     resize_buf = nullptr;
 
@@ -457,7 +457,7 @@ CYOLOV5_NPU_Detector::CYOLOV5_NPU_Detector()
  * @brief Destroy the cyolov5 npu detector::cyolov5 npu detector object
  *
  */
-CYOLOV5_NPU_Detector::~CYOLOV5_NPU_Detector()
+CYOLOV5_NPU_Detector_CAS::~CYOLOV5_NPU_Detector_CAS()
 {
     // 释放 rknn
     rknn_destroy(ctx);
@@ -480,7 +480,7 @@ CYOLOV5_NPU_Detector::~CYOLOV5_NPU_Detector()
  *
  * @return int
  */
-int CYOLOV5_NPU_Detector::__init_model()
+int CYOLOV5_NPU_Detector_CAS::__init_model()
 {
     int ret = 0;
     model_data_size = 0;
@@ -494,7 +494,8 @@ int CYOLOV5_NPU_Detector::__init_model()
 #endif
 
     // 根据文件名加载模型文件
-    model_data = __load_model(MODEL_NAME, &model_data_size);
+    //model_data = __load_model(MODEL_NAME, &model_data_size);
+    model_data = __load_model("./models/cas.rknn", &model_data_size);
 
     // 初始化 rknn
     ret = rknn_init(&ctx, model_data, model_data_size, 0, NULL);
@@ -610,7 +611,7 @@ int CYOLOV5_NPU_Detector::__init_model()
 
 // TODO:
 // TODO:
-// int CYOLOV5_NPU_Detector::__pre_process_rga(const cv::Mat matIm)
+// int CYOLOV5_NPU_Detector_CAS::__pre_process_rga(const cv::Mat matIm)
 // {
 //     int ret = 0;
 
@@ -699,7 +700,7 @@ int CYOLOV5_NPU_Detector::__init_model()
  *
  * @param  matIm            My Param doc
  */
-int CYOLOV5_NPU_Detector::__pre_process(const cv::Mat matIm)
+int CYOLOV5_NPU_Detector_CAS::__pre_process(const cv::Mat matIm)
 {
     m_matBGRIn = matIm.clone();
     m_ImgH = m_matBGRIn.rows;
@@ -823,7 +824,7 @@ int CYOLOV5_NPU_Detector::__pre_process(const cv::Mat matIm)
  * @param  objects          My Param doc
  * @return int
  */
-int CYOLOV5_NPU_Detector::process2(const cv::Mat matIm, std::vector<RB_DetTarget_S> &objects)
+int CYOLOV5_NPU_Detector_CAS::process2(const cv::Mat matIm, std::vector<RB_DetTarget_S> &objects)
 {
     int ret = 0;
     if (matIm.empty())
@@ -890,7 +891,7 @@ std::cout<<"===================== get_results==========="<<objects.size()<<std::
  * @param  objects          My Param doc
  * @return int
  */
-int CYOLOV5_NPU_Detector::get_results(std::vector<RB_DetTarget_S> &objects)
+int CYOLOV5_NPU_Detector_CAS::get_results(std::vector<RB_DetTarget_S> &objects)
 {
     objects.clear();
     std::vector<RB_DetTarget_S>().swap(objects);
@@ -904,7 +905,7 @@ int CYOLOV5_NPU_Detector::get_results(std::vector<RB_DetTarget_S> &objects)
  *
  * @param  bgr              My Param doc
  */
-void CYOLOV5_NPU_Detector::draw_objects()
+void CYOLOV5_NPU_Detector_CAS::draw_objects()
 {
     // cv::namedWindow("SHOW_Result", cv::WINDOW_NORMAL);
     cv::Mat image = m_matBGRIn.clone();
@@ -930,7 +931,7 @@ void CYOLOV5_NPU_Detector::draw_objects()
 #endif
 
 #ifdef SHOW_DEBUG_INFO
-void CYOLOV5_NPU_Detector::__dump_tensor_attr(rknn_tensor_attr *attr)
+void CYOLOV5_NPU_Detector_CAS::__dump_tensor_attr(rknn_tensor_attr *attr)
 {
     printf("  index=%d, name=%s, n_dims=%d, dims=[%d, %d, %d, %d], n_elems=%d, size=%d, fmt=%s, type=%s, qnt_type=%s, "
            "zp=%d, scale=%f\n",
@@ -941,7 +942,7 @@ void CYOLOV5_NPU_Detector::__dump_tensor_attr(rknn_tensor_attr *attr)
 }
 #endif
 
-unsigned char *CYOLOV5_NPU_Detector::__load_data(FILE *fp, size_t ofst, size_t sz)
+unsigned char *CYOLOV5_NPU_Detector_CAS::__load_data(FILE *fp, size_t ofst, size_t sz)
 {
     unsigned char *data;
     int ret;
@@ -968,7 +969,7 @@ unsigned char *CYOLOV5_NPU_Detector::__load_data(FILE *fp, size_t ofst, size_t s
     return data;
 }
 
-unsigned char *CYOLOV5_NPU_Detector::__load_model(const char *filename, int *model_size)
+unsigned char *CYOLOV5_NPU_Detector_CAS::__load_model(const char *filename, int *model_size)
 {
     FILE *fp;
     unsigned char *data;
@@ -991,7 +992,7 @@ unsigned char *CYOLOV5_NPU_Detector::__load_model(const char *filename, int *mod
     return data;
 }
 
-void CYOLOV5_NPU_Detector::__nms_sorted_bboxes(const std::vector<RB_DetTarget_S> &vecObjs, std::vector<int> &picked)
+void CYOLOV5_NPU_Detector_CAS::__nms_sorted_bboxes(const std::vector<RB_DetTarget_S> &vecObjs, std::vector<int> &picked)
 {
     picked.clear();
 
@@ -1026,7 +1027,7 @@ void CYOLOV5_NPU_Detector::__nms_sorted_bboxes(const std::vector<RB_DetTarget_S>
     }
 }
 
-void CYOLOV5_NPU_Detector::__qsort_descent_inplace(std::vector<RB_DetTarget_S> &vecObjs, int left, int right)
+void CYOLOV5_NPU_Detector_CAS::__qsort_descent_inplace(std::vector<RB_DetTarget_S> &vecObjs, int left, int right)
 {
     int i = left;
     int j = right;
@@ -1065,7 +1066,7 @@ void CYOLOV5_NPU_Detector::__qsort_descent_inplace(std::vector<RB_DetTarget_S> &
     }
 }
 
-void CYOLOV5_NPU_Detector::__generate_proposals(int8_t *input, int *anchor, int stride, int32_t zp,
+void CYOLOV5_NPU_Detector_CAS::__generate_proposals(int8_t *input, int *anchor, int stride, int32_t zp,
                                                 float scale, std::vector<RB_DetTarget_S> &vecObjs)
 {
     int grid_h = m_NetH / stride;
@@ -1145,7 +1146,7 @@ void CYOLOV5_NPU_Detector::__generate_proposals(int8_t *input, int *anchor, int 
     }
 }
 
-void CYOLOV5_NPU_Detector::__post_process(int8_t *input0, int8_t *input1, int8_t *input2)
+void CYOLOV5_NPU_Detector_CAS::__post_process(int8_t *input0, int8_t *input1, int8_t *input2)
 {
     // 不同 stride 下的目标集合
     std::vector<RB_DetTarget_S> vecPropS8;

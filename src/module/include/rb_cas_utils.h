@@ -89,7 +89,7 @@ private:
 #else
 #ifdef WITH_RKNN
     /* 目标检测器 */
-    CYOLOV5_NPU_Detector*  m_PCYOLOV5DetNet;
+    CYOLOV5_NPU_Detector_CAS*  m_PCYOLOV5DetNet;
 #endif
 #endif
 

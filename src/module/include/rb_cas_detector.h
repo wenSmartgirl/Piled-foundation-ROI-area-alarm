@@ -176,14 +176,14 @@ private:
  * 基于 RK3588 的 NPU 进行开发
  *
  */
-class CYOLOV5_NPU_Detector
+class CYOLOV5_NPU_Detector_CAS
 {
 public:
     // 初始化模型和各种参数
-    CYOLOV5_NPU_Detector();
+    CYOLOV5_NPU_Detector_CAS();
 
     // 释放相关资源
-    ~CYOLOV5_NPU_Detector();
+    ~CYOLOV5_NPU_Detector_CAS();
 
     // 处理图像，输入的是 bgr 图像
     int process2(const cv::Mat matIm, std::vector<RB_DetTarget_S> &objects);
