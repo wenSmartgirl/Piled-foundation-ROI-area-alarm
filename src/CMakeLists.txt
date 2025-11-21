@@ -8,6 +8,11 @@ aux_source_directory(module/source libSRCS)
 # 生成动态库
 #add_library(${CMAKE_PROJECT_NAME} STATIC ${libSRCS})
 add_library(${CMAKE_PROJECT_NAME} SHARED ${libSRCS})
+
+#add_executable(main module/source/main.cpp module/source/rb_cah_detector.cpp module/source/rb_cah_utils.cpp module/source/rb_cah_signature.cpp)
+
+#target_link_libraries(main ${EXTRA_LIBS} -fopenmp -lpthread -lm)
+
 # 包含include 
 target_include_directories(${CMAKE_PROJECT_NAME}
   PRIVATE
@@ -24,3 +29,4 @@ target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${EXTRA_LIBS} -lpthread -lm)
 FILE(GLOB INTERFACES interface/*.h)
 install(FILES ${INTERFACES} DESTINATION include)
 install(TARGETS ${CMAKE_PROJECT_NAME} DESTINATION lib)
+message(STATUS "CMAKE_PROJECT_NAME = ${CMAKE_PROJECT_NAME}")

@@ -1,20 +1,4 @@
-/**
- * @file rb_common.h
- * @brief META type definitions for RB.
- * 
- * @author jwzhou (zhou24388@163.com)
- * @version 1.0.0
- * @date 2022-05-04
- * 
- * @copyright Copyright (c) 2022 Hefei Source Intelligence Technology Co,.Ltd.
- * 
- * @par update log:
- * Date     :  2022-05-05
- * version  :  {version}
- * Author   :  jwzhou
- * Log      :  rearrange the file structure.
- * copyright:  {copyright}
- */
+
 #ifndef __RB_COMMON_H__
 #define __RB_COMMON_H__
 
