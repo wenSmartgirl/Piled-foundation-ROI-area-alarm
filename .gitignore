@@ -1,9 +1,30 @@
-.vscode/
-examples/build/
-tests/build/
-tools/build/
-*build*/
-host-build/
-temp_example/
-si_edge_gconfig.h
-si_edge_signature.cpp
+# Visual Studio cache
+.vs/
+*.ncb
+*.sdf
+*.suo
+*.ipch
+
+# Build directories
+Debug/
+Release/
+x64/
+x86/
+ipch/
+out/
+build/
+
+# 中间文件
+*.obj
+*.pch
+*.pdb
+*.log
+*.idb
+*.tlog
+
+# 其他临时文件
+*.user
+*.tmp
+*.log
+*.cache
+*.vcxproj.user
